@@ -10,5 +10,7 @@ data class Item(
     val title: String,
     val website: String,
     val img: String = "",
-    val priority: Priority = Priority.Low
+    val imgLocal:Int = 0,
+    val priority: Priority = Priority.Low,
+    val isImgLocal: Boolean = false,
 )

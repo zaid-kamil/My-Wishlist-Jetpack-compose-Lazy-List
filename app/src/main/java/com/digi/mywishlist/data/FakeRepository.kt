@@ -1,5 +1,7 @@
 package com.digi.mywishlist.data
 
+import com.digi.mywishlist.R
+
 class FakeRepository{
     fun getItems(): List<Item>{
         return listOf(
@@ -14,6 +16,12 @@ class FakeRepository{
                 website = "https://about.fb.com/news/2023/11/meta-quest-3-holiday-gift-that-transforms-your-home/",
                 img = "https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/N3MSJXLL7RAQJG6UNQAIXU7URA.gif",
                 priority = Priority.Low
+            ),
+            Item(
+                title ="Playstation 5",
+                website = "https://www.playstation.com/en-in/ps5/",
+                imgLocal = R.drawable.ps5,
+                isImgLocal = true,
             )
         )
     }

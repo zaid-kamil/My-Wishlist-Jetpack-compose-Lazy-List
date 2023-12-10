@@ -2,6 +2,7 @@ package com.digi.mywishlist.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -50,6 +51,7 @@ fun ListingScreen(
 @Composable
 fun ItemCard(item: Item, onClick: () -> Unit) {
     Card(
+        modifier = Modifier.fillMaxWidth(),
         onClick = onClick,
         colors = CardDefaults.cardColors(
             containerColor = when (item.priority) {
@@ -59,12 +61,21 @@ fun ItemCard(item: Item, onClick: () -> Unit) {
             }
         )
     ) {
-        GlideImage(
-            model = item.img,
-            contentDescription = item.title,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.height(250.dp)
-        )
+        if(item.isImgLocal){
+            GlideImage(
+                model = item.imgLocal,
+                contentDescription = item.title,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.height(250.dp)
+            )
+        }else{
+            GlideImage(
+                model = item.img,
+                contentDescription = item.title,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.height(250.dp)
+            )
+        }
         Column(modifier = Modifier.padding(16.dp)) {
             Text(text = item.title)
             Text(text = item.website, style = MaterialTheme.typography.bodySmall)

@@ -11,7 +11,8 @@ import com.digi.mywishlist.ui.screens.ListingScreen
 
 enum class Screen {
     Home,
-    Detail
+    Detail,
+    Choices
 }
 
 @Composable
@@ -33,5 +34,10 @@ fun MyNavigation() {
         composable(Screen.Detail.name) {
             DetailScreen(uiState.value)
         }
+
+        composable(Screen.Choices.name){
+
+        }
+
     }
 }

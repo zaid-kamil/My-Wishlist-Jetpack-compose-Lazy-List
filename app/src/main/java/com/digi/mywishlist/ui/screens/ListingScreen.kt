@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalGlideComposeApi::class)
+
 package com.digi.mywishlist.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +21,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+
 import com.digi.mywishlist.data.FakeRepository
 import com.digi.mywishlist.data.Item
 import com.digi.mywishlist.data.Priority
@@ -47,7 +50,7 @@ fun ListingScreen(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalGlideComposeApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ItemCard(item: Item, onClick: () -> Unit) {
     Card(

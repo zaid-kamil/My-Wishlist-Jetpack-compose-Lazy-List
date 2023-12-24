@@ -2,6 +2,8 @@ package com.digi.mywishlist.data
 
 import android.content.Context
 
+// step 6: create app container
+
 interface AppContainer {
     val itemsRepository: WishlistRepository
 }

@@ -7,6 +7,8 @@ import androidx.room.Query
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
+// step 2: create DAO
+
 @Dao
 interface ItemDao {
 

@@ -9,6 +9,8 @@ enum class Priority {
     Low
 }
 
+// step 1: create data class as entity
+
 @Entity(tableName = "items")
 data class Item(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,

@@ -2,6 +2,8 @@ package com.digi.mywishlist.data
 
 import kotlinx.coroutines.flow.Flow
 
+// step 4: create repository interface
+
 interface WishlistRepository {
     fun getWishlist(): Flow<List<Item>>
     fun getWishlistItem(id: Int): Flow<Item>

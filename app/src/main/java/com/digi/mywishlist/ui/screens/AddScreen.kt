@@ -1,5 +1,9 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.digi.mywishlist.ui.screens
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -7,25 +11,35 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.digi.mywishlist.R
+import com.digi.mywishlist.data.Priority
 import com.digi.mywishlist.ui.UiEvent
 import com.digi.mywishlist.ui.UiState
 import com.digi.mywishlist.ui.theme.MyWishlistTheme
@@ -38,31 +52,35 @@ fun AddScreen(
     onEvent: (UiEvent) -> Unit,
 ) {
     Box(
-        modifier = modifier
-            .fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
-        Column(
+        Image(
+            painter = painterResource(id = R.drawable.bg3),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxSize()
+                .alpha(.8f)
+        )
+        Image(
+            painter = painterResource(id = R.drawable.reigen_sensei),
+            contentDescription = null,
+            modifier = Modifier.fillMaxWidth().scale(1.2f),
+        )
+        Column(
+            modifier = Modifier
+                .fillMaxSize(
+
+                )
                 .padding(16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "Add Item to Wishlist",
-                style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.primary,
-                fontWeight = FontWeight.Bold
-            )
-
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.primary.copy(alpha = .5f)
+                    .padding(16.dp), colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.tertiary.copy(alpha = .4f)
                 )
             ) {
                 Column(
@@ -71,67 +89,138 @@ fun AddScreen(
                         .fillMaxWidth()
 
                 ) {
-
-                    TextField(
-                        label = { Text(text = "Title") },
-                        modifier = Modifier.fillMaxWidth(),
-                        value = uiState.title,
-                        onValueChange = { onEvent(UiEvent.OnSetTitle(it)) },
+                    Text(
+                        text = "Add Item to Wishlist",
+                        style = MaterialTheme.typography.headlineSmall,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        fontWeight = FontWeight.Bold,
                     )
-                    Spacer(modifier = Modifier.padding(8.dp))
-
-                    TextField(
-                        label = { Text(text = "Website Url") },
-                        modifier = Modifier.fillMaxWidth(),
-                        value = uiState.website,
-                        onValueChange = { onEvent(UiEvent.OnSetWebsite(it)) },
+                    FormField(
+                        label = "Title",
+                        uiState = uiState,
+                        onEvent = onEvent,
                     )
-                    Spacer(modifier = Modifier.padding(8.dp))
+                    Spacer(modifier = Modifier.padding(4.dp))
 
-                    TextField(
-                        label = { Text(text = "Image Url") },
-                        modifier = Modifier.fillMaxWidth(),
-                        value = uiState.img,
-                        onValueChange = { onEvent(UiEvent.OnSetImage(it)) },
+                    FormField(
+                        label = "Website",
+                        uiState = uiState,
+                        onEvent = onEvent
                     )
-                    Spacer(modifier = Modifier.padding(8.dp))
-                    Text(text = "Priority")
+                    Spacer(modifier = Modifier.padding(4.dp))
+
+                    FormField(
+                        label = "Image",
+                        uiState = uiState,
+                        onEvent = onEvent
+                    )
+                    Spacer(modifier = Modifier.padding(4.dp))
+                    Text(
+                        text = "Priority",
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onPrimary,
+                    )
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Absolute.Left
+                        horizontalArrangement = Arrangement.Center,
                     ) {
-                        Card(
-                            onClick = { },
-                        ) {
-                            Text(text = "Low", modifier = Modifier.padding(8.dp))
-                        }
+                        PriorityCard(
+                            text = "Low",
+                            priority = Priority.Low,
+                            color = Color.Yellow.copy(alpha = .8f),
+                            uiState = uiState,
+                            onEvent = onEvent
+                        )
                         Spacer(modifier = Modifier.padding(8.dp))
-                        Card(
-                            onClick = { },
-
-                            ) {
-                            Text(text = "Medium", modifier = Modifier.padding(8.dp))
-                        }
+                        PriorityCard(
+                            text = "Medium",
+                            priority = Priority.Medium,
+                            color = Color.Cyan.copy(alpha = .8f),
+                            uiState = uiState,
+                            onEvent = onEvent
+                        )
                         Spacer(modifier = Modifier.padding(8.dp))
-                        Card(
-                            onClick = { },
-
-                            ) {
-                            Text(text = "High", modifier = Modifier.padding(8.dp))
-                        }
+                        PriorityCard(
+                            text = "High",
+                            priority = Priority.High,
+                            color = Color.Green.copy(alpha = .8f),
+                            uiState = uiState,
+                            onEvent = onEvent
+                        )
                     }
+                    Spacer(modifier = Modifier.padding(16.dp))
                 }
             }
-            ExtendedFloatingActionButton(
+            FloatingActionButton(
                 onClick = { onEvent(UiEvent.OnSaveClicked) },
-                modifier = Modifier.width(150.dp)
+                shape = MaterialTheme.shapes.extraLarge,
+                modifier = Modifier
+                    .size(60.dp)
+                    .offset(y = (-45).dp)
             ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = null)
-                Spacer(modifier = Modifier.padding(8.dp))
-                Text(text = "Add")
             }
         }
     }
+}
+
+@Composable
+fun PriorityCard(
+    text: String,
+    priority: Priority,
+    uiState: UiState,
+    onEvent: (UiEvent) -> Unit,
+    color: Color
+) {
+    Card(
+        onClick = {
+            onEvent(UiEvent.OnSetPriority(priority))
+        },
+        colors = CardDefaults.cardColors(
+            containerColor = color
+        ),
+        elevation = CardDefaults.elevatedCardElevation(
+            defaultElevation = if (uiState.priority == priority) 8.dp else 0.dp
+        ),
+        border = if (uiState.priority == priority) BorderStroke(
+            1.dp,
+            Color.Gray
+        ) else null,
+    ) {
+        Text(text = text, modifier = Modifier.padding(8.dp))
+    }
+}
+
+@Composable
+fun FormField(
+    label: String,
+    uiState: UiState,
+    onEvent: (UiEvent) -> Unit,
+) {
+    OutlinedTextField(
+        label = { Text(text = label) },
+        modifier = Modifier.fillMaxWidth(),
+        colors = TextFieldDefaults.colors(
+            focusedContainerColor = MaterialTheme.colorScheme.surface,
+            unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+        ),
+        shape = MaterialTheme.shapes.extraLarge,
+        value = uiState.title,
+        onValueChange = { onEvent(UiEvent.OnSetTitle(it)) },
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Default.Edit,
+                contentDescription = null,
+                modifier = Modifier.padding(8.dp)
+            )
+        },
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

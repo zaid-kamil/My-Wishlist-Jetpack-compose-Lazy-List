@@ -1,6 +1,7 @@
 package com.digi.mywishlist.ui
 
 import com.digi.mywishlist.data.Item
+import com.digi.mywishlist.data.Priority
 
 data class UiState(
     val selectedItem: Item? = null,
@@ -8,5 +9,6 @@ data class UiState(
     val title: String = "",
     val website: String = "",
     val img: String = "",
+    val priority: Priority = Priority.Low,
 )
 

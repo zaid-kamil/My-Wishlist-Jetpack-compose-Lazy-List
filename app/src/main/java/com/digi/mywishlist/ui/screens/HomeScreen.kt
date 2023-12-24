@@ -1,5 +1,6 @@
 package com.digi.mywishlist.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,9 +20,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.digi.mywishlist.R
 import com.digi.mywishlist.ui.theme.MyWishlistTheme
 
 @Composable
@@ -38,10 +43,17 @@ fun HomeScreen() {
                     )
                 )
             )
-            .padding(16.dp)
     ) {
+        Image(
+            painter = painterResource(id = R.drawable.bg3),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .alpha(.8f)
+                .fillMaxSize()
+        )
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize().padding(8.dp),
             verticalArrangement = Arrangement.Center,
         ) {
             Row(
@@ -77,14 +89,15 @@ fun HomeScreen() {
                     .padding(8.dp)
             ) {
 
-                Card() {
+                Card(modifier = Modifier.weight(3f)) {
                     Text(
                         text = "View Wishlist",
                         style = MaterialTheme.typography.headlineSmall,
                         modifier = Modifier.padding(cardPadding)
                     )
                 }
-                Card() {
+                Spacer(modifier = Modifier.padding(8.dp))
+                Card(modifier = Modifier.weight(2f)) {
                     Row(
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically,

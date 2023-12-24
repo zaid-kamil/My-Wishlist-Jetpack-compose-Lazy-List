@@ -123,7 +123,7 @@ fun AddScreen(
                 }
             }
             ExtendedFloatingActionButton(
-                onClick = { /*TODO*/ },
+                onClick = { onEvent(UiEvent.OnSaveClicked) },
                 modifier = Modifier.width(150.dp)
             ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = null)

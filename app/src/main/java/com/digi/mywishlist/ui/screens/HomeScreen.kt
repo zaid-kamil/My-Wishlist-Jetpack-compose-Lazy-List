@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -27,10 +28,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.digi.mywishlist.R
+import com.digi.mywishlist.ui.UiEvent
 import com.digi.mywishlist.ui.theme.MyWishlistTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    onEvent: (UiEvent) -> Unit = {}
+) {
     val cardPadding = 24.dp
     Box(
         modifier = Modifier
@@ -53,7 +58,9 @@ fun HomeScreen() {
                 .fillMaxSize()
         )
         Column(
-            modifier = Modifier.fillMaxSize().padding(8.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp),
             verticalArrangement = Arrangement.Center,
         ) {
             Row(
@@ -63,7 +70,10 @@ fun HomeScreen() {
                     .fillMaxWidth()
                     .padding(8.dp)
             ) {
-                Card(modifier = Modifier.fillMaxWidth()) {
+                Card(
+                    onClick = { onEvent(UiEvent.OnSearchCardClicked) },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
                     Row(
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically,
@@ -89,7 +99,10 @@ fun HomeScreen() {
                     .padding(8.dp)
             ) {
 
-                Card(modifier = Modifier.weight(3f)) {
+                Card(
+                    onClick = { onEvent(UiEvent.OnViewCardClicked) },
+                    modifier = Modifier.weight(3f)
+                ) {
                     Text(
                         text = "View Wishlist",
                         style = MaterialTheme.typography.headlineSmall,
@@ -97,7 +110,10 @@ fun HomeScreen() {
                     )
                 }
                 Spacer(modifier = Modifier.padding(8.dp))
-                Card(modifier = Modifier.weight(2f)) {
+                Card(
+                    onClick = { onEvent(UiEvent.OnAddCardClicked) },
+                    modifier = Modifier.weight(2f)
+                ) {
                     Row(
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically,

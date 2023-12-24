@@ -1,43 +1,45 @@
 package com.digi.mywishlist.ui
 
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.digi.mywishlist.ui.screens.DetailScreen
-import com.digi.mywishlist.ui.screens.ListingScreen
+import com.digi.mywishlist.ui.screens.AddScreen
+import com.digi.mywishlist.ui.screens.HomeScreen
 
 enum class Screen {
-    Home,
-    Detail,
-    Choices
+    Home, List, Detail, Search, Add
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyNavigation() {
-    // viewModel object
-    val viewModel = viewModel<MyViewModel>()
-    // uiState object
-    val uiState = viewModel.uiState.collectAsState()
-    // navigation logic
+    val viewModel: MyViewModel = viewModel(factory = AppViewModelProvider.viewModel)
     val navController = rememberNavController()
-    // navigation routes
+    val uiState = viewModel.uiState.collectAsState().value
+
+    // composable for each screen
     NavHost(navController = navController, startDestination = Screen.Home.name) {
         composable(Screen.Home.name) {
-            ListingScreen{
-                viewModel.onItemSelected(it)
-                navController.navigate(Screen.Detail.name)
+            HomeScreen{
+               when(it){
+                   UiEvent.OnAddCardClicked -> navController.navigate(Screen.Add.name)
+                   UiEvent.OnSearchCardClicked -> navController.navigate(Screen.Search.name)
+                   UiEvent.OnViewCardClicked -> navController.navigate(Screen.List.name)
+                   else -> {}
+               }
             }
         }
-        composable(Screen.Detail.name) {
-            DetailScreen(uiState.value)
+        composable(Screen.List.name) {}
+        composable(Screen.Detail.name) {}
+        composable(Screen.Add.name) {
+            AddScreen(uiState){
+
+            }
         }
-
-        composable(Screen.Choices.name){
-
-        }
-
+        composable(Screen.Search.name) {}
     }
 }

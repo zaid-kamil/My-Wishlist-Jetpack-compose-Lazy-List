@@ -7,11 +7,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-
-data class UiState(
-    val selectedItem: Item? = null
-)
-
 class MyViewModel(private val itemsRepository: WishlistRepository) : ViewModel() {
     private var _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()

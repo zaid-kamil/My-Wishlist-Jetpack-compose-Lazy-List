@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.digi.mywishlist.ui.screens.AddScreen
 import com.digi.mywishlist.ui.screens.HomeScreen
+import com.digi.mywishlist.ui.screens.ListingScreen
 
 enum class Screen {
     Home, List, Detail, Search, Add
@@ -33,12 +34,15 @@ fun MyNavigation() {
                }
             }
         }
-        composable(Screen.List.name) {}
+        composable(Screen.List.name) {
+            ListingScreen(
+                uiState = uiState,
+                onItemSelected = { navController.navigate(Screen.Detail.name) }
+            )
+        }
         composable(Screen.Detail.name) {}
         composable(Screen.Add.name) {
-            AddScreen(uiState){
-
-            }
+            AddScreen(uiState, onEvent = viewModel::onEvent)
         }
         composable(Screen.Search.name) {}
     }

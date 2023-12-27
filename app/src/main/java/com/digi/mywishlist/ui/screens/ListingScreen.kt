@@ -21,16 +21,15 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-
-import com.digi.mywishlist.data.FakeRepository
 import com.digi.mywishlist.data.Item
 import com.digi.mywishlist.data.Priority
+import com.digi.mywishlist.ui.UiState
 
 @Composable
 fun ListingScreen(
-    onItemSelected: (Item) -> Unit
+    uiState: UiState,
+    onItemSelected: (Item) -> Unit,
 ) {
-    val wishList = FakeRepository().getItems()
     LazyColumn(
         modifier = Modifier.padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -41,7 +40,7 @@ fun ListingScreen(
                 style = MaterialTheme.typography.headlineLarge
             )
         }
-        items(wishList) { item ->
+        items(uiState.items) { item ->
             ItemCard(
                 item = item,
                 onClick = { onItemSelected(item) },

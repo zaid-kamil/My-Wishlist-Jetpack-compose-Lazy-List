@@ -2,7 +2,6 @@
 
 package com.digi.mywishlist.ui.screens
 
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -105,7 +104,7 @@ fun AddScreen(
                         label = "Title",
                         value = uiState.title
                     ) {
-                        Log.d("AddScreen", "Title: $it")
+                        onEvent(UiEvent.OnSetTitle(it))
                     }
                     Spacer(modifier = Modifier.padding(4.dp))
 

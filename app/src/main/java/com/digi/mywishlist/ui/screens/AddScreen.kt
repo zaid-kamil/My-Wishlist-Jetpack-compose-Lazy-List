@@ -2,6 +2,7 @@
 
 package com.digi.mywishlist.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -13,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
@@ -65,7 +65,9 @@ fun AddScreen(
         Image(
             painter = painterResource(id = R.drawable.reigen_sensei),
             contentDescription = null,
-            modifier = Modifier.fillMaxWidth().scale(1.2f),
+            modifier = Modifier
+                .fillMaxWidth()
+                .scale(1.2f),
         )
         Column(
             modifier = Modifier
@@ -101,23 +103,27 @@ fun AddScreen(
                     )
                     FormField(
                         label = "Title",
-                        uiState = uiState,
-                        onEvent = onEvent,
-                    )
+                        value = uiState.title
+                    ) {
+                        Log.d("AddScreen", "Title: $it")
+                    }
                     Spacer(modifier = Modifier.padding(4.dp))
 
                     FormField(
                         label = "Website",
-                        uiState = uiState,
-                        onEvent = onEvent
-                    )
+                        value = uiState.website,
+                    ) {
+                        onEvent(UiEvent.OnSetWebsite(it))
+                    }
+
                     Spacer(modifier = Modifier.padding(4.dp))
 
                     FormField(
                         label = "Image",
-                        uiState = uiState,
-                        onEvent = onEvent
-                    )
+                        value = uiState.img
+                    ) {
+                        onEvent(UiEvent.OnSetImage(it))
+                    }
                     Spacer(modifier = Modifier.padding(4.dp))
                     Text(
                         text = "Priority",
@@ -161,7 +167,6 @@ fun AddScreen(
                 onClick = { onEvent(UiEvent.OnSaveClicked) },
                 shape = MaterialTheme.shapes.extraLarge,
                 modifier = Modifier
-                    .size(60.dp)
                     .offset(y = (-45).dp)
             ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = null)
@@ -200,8 +205,8 @@ fun PriorityCard(
 @Composable
 fun FormField(
     label: String,
-    uiState: UiState,
-    onEvent: (UiEvent) -> Unit,
+    value: String = "",
+    forEvent: (String) -> Unit
 ) {
     OutlinedTextField(
         label = { Text(text = label) },
@@ -211,8 +216,7 @@ fun FormField(
             unfocusedContainerColor = MaterialTheme.colorScheme.surface,
         ),
         shape = MaterialTheme.shapes.extraLarge,
-        value = uiState.title,
-        onValueChange = { onEvent(UiEvent.OnSetTitle(it)) },
+        value = value,
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Edit,
@@ -220,6 +224,7 @@ fun FormField(
                 modifier = Modifier.padding(8.dp)
             )
         },
+        onValueChange = forEvent
     )
 }
 
